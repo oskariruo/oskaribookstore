@@ -41,8 +41,13 @@ public class BookController {
     }
     
     @RequestMapping(value = "/editbook/{id}", method = RequestMethod.GET)
-    public String editStudent(@PathVariable("id") Long bookId, Model model, Book book){
-    	model.addAttribute("book", book);
+    public String editStudent(@PathVariable("id") Long bookId, Model model){
+    	model.addAttribute("book", repository.findById(bookId));
     	return "editbook";
     }     
+    @RequestMapping(value = "/process", method = RequestMethod.POST)
+    public String edit(Book book){
+        repository.save(book);
+        return "redirect:/booklist";
+    }    
 	}
