@@ -1,5 +1,7 @@
 package com.example.oskaribookstore.web;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,11 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.oskaribookstore.model.Book;
 import com.example.oskaribookstore.model.BookRepository;
+import com.example.oskaribookstore.model.CategoryRepository;
 
 @Controller
 public class BookController {
 	@Autowired
 	private BookRepository repository; 
+	
+	@Autowired
+	private CategoryRepository crepository;
 	
     @RequestMapping(value= {"/", "/booklist"})
     public String bookList(Model model) {	
@@ -25,8 +31,9 @@ public class BookController {
     @RequestMapping(value = "/add")
     public String addBook(Model model){
     	model.addAttribute("book", new Book());
+        model.addAttribute("categories", crepository.findAll());
         return "addbook";
-    }     
+    } 
     
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(Book book){
@@ -41,8 +48,10 @@ public class BookController {
     }
     
     @RequestMapping(value = "/editbook/{id}", method = RequestMethod.GET)
-    public String editStudent(@PathVariable("id") Long bookId, Model model){
-    	model.addAttribute("book", repository.findById(bookId));
+    public String modifyBook(@PathVariable("id") Long bookId, Model model) {
+    	Optional<Book> book = repository.findById(bookId);
+        model.addAttribute("categories", crepository.findAll());
+    	model.addAttribute("book", book);
     	return "editbook";
     }     
     @RequestMapping(value = "/process", method = RequestMethod.POST)
