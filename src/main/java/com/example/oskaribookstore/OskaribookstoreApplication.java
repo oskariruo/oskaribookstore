@@ -20,18 +20,20 @@ public class OskaribookstoreApplication {
 	@Bean
 	public CommandLineRunner studentDemo(BookRepository repository, CategoryRepository crepository) {
 		return (args) -> {
-			
+
 			System.out.println("save a couple of categories");
 			crepository.save(new Category("Horror"));
 			crepository.save(new Category("Fiction"));
 			crepository.save(new Category("Fantasy"));
-			
+
 			System.out.println("save a couple of books");
-			
-			
-			repository.save(new Book("Harry Potter", "JK Rowling", 1997, "9780747532743", 19.90, crepository.findByName("Fantasy").get(0)));
-			repository.save(new Book("The Hobbit", "J. R. R. Tolkien", 1937, "9780044403371", 39.90, crepository.findByName("Fantasy").get(0)));	
-			repository.save(new Book("The Horror book", "Kirjoittaja testi", 9999, "111222333444", 11.99, crepository.findByName("Horror").get(0)));	
+
+			repository.save(new Book("Harry Potter", "JK Rowling", 1997, "9780747532743", 19.90,
+					crepository.findByName("Fantasy").get(0)));
+			repository.save(new Book("The Hobbit", "J. R. R. Tolkien", 1937, "9780044403371", 39.90,
+					crepository.findByName("Fantasy").get(0)));
+			repository.save(new Book("The Horror book", "Kirjoittaja testi", 9999, "111222333444", 11.99,
+					crepository.findByName("Horror").get(0)));
 
 			System.out.println("fetch all books");
 			for (Book book : repository.findAll()) {
