@@ -3,8 +3,8 @@ package com.example.oskaribookstore.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "usertable")
 public class User {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, updatable = false)
